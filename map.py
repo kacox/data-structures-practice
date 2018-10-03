@@ -97,9 +97,14 @@ class Map:
         else:
             # start looking elsewhere; rehash
             next_slot = self.rehash(hashvalue)
+            #found = False
+
             while next_slot != hashvalue:
                 if self.slots[next_slot] == key:
                     return self.data[next_slot]
+                next_slot = self.rehash(next_slot)
+
+            return "{} not in map.".format(key)
 
 
     def delete(self):
