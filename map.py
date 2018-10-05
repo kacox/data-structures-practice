@@ -130,6 +130,13 @@ class Map:
     def __len__(self):
         return len(self.slots)
 
+    def __contains__(self, key):
+        """Returns whether or not key is in the Map."""
+        for element in self.slots:
+            if element == key:
+                return True
+        return False
+
     def __repr__(self):
         """Human-readable version of map."""
         ans = "< "
