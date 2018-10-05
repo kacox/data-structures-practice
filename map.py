@@ -127,8 +127,8 @@ class Map:
 
             return "{} not in map.".format(key)
 
-    def len():
-        pass
+    def __len__(self):
+        return len(self.slots)
 
     def __repr__(self):
         """Human-readable version of map."""
