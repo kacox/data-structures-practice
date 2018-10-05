@@ -97,7 +97,6 @@ class Map:
         else:
             # start looking elsewhere; rehash
             next_slot = self.rehash(hashvalue)
-            #found = False
 
             while next_slot != hashvalue:
                 if self.slots[next_slot] == key:
@@ -107,8 +106,26 @@ class Map:
             return "{} not in map.".format(key)
 
 
-    def delete(self):
-        pass
+    def delete(self, key):
+        """Delete an item by key."""
+        hashvalue = self.hash_function(key)
+
+        if self.slots[hashvalue] == key:
+            self.slots[hashvalue] = None
+            self.data[hashvalue] = None
+        else:
+            # start looking elsewhere; rehash
+            next_slot = self.rehash(hashvalue)
+
+            while next_slot != hashvalue:
+                if self.slots[next_slot] == key:
+                    self.slots[next_slot] = None
+                    self.data[next_slot] = None
+                    return
+                else:
+                    next_slot = self.rehash(next_slot)
+
+            return "{} not in map.".format(key)
 
     def len():
         pass
