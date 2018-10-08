@@ -94,7 +94,7 @@ class Map:
             self.slots[hashvalue] = None
             self.data[hashvalue] = None
         else:
-            # start looking elsewhere; rehash
+            # start looking elsewhere; rehashgit 
             next_slot = self.rehash(hashvalue)
 
             while next_slot != hashvalue:
