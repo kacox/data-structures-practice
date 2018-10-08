@@ -11,9 +11,32 @@ Includes:
         - Reverse level order traversal
 """
 
-import sys
 
-sys.path.append("../")
+class Queue:
+    """A queue data structure implemented with a list."""
+
+    def __init__(self):
+        self.members = []
+
+    def enqueue(self, item):
+        self.members.insert(0, item)
+
+    def dequeue(self):
+        if not self.is_empty():
+            return self.members.pop()
+
+    def is_empty(self):
+        return len(self.members) == 0
+
+    def peek(self):
+        if not self.is_empty():
+            return self.members[-1].value
+
+    def __len__(self):
+        return self.size()
+
+    def size(self):
+        return len(self.members)
 
 
 class BinaryNode:
@@ -51,6 +74,9 @@ class BinaryTree:
     def __init__(self, root):
         self.root = root
 
+    def get_root(self):
+        return self.root
+
     def traverse(self, traversal_type):
         """Traverse the tree in the specified style."""
         if traversal_type == "preorder":
@@ -58,7 +84,9 @@ class BinaryTree:
         elif traversal_type == "inorder":
             print(self.inorder_recursive(self.root, "").rstrip("--"))
         elif traversal_type == "postorder":
-            print(self.postorder_recursive(self.root, "").rstrip("--"))                              
+            print(self.postorder_recursive(self.root, "").rstrip("--"))  
+        elif traversal_type == "levelorder":
+            print(self.levelorder_bfs())                            
 
     def preorder_recursive(self, start, path):
         """Root --> Left --> Right"""
@@ -83,6 +111,35 @@ class BinaryTree:
             path = self.postorder_recursive(start.right_child, path)
             path += (str(start.value) + "--")
         return path
+
+    def levelorder_bfs(self):
+        """Classic BFS."""
+        path = ""
+        q = Queue()
+        q.enqueue(self.root)
+
+        while q:
+            current_node = q.dequeue()
+            path += (str(current_node.value) + "--")
+
+            if current_node.left_child:
+                q.enqueue(current_node.left_child)
+            if current_node.right_child:
+                q.enqueue(current_node.right_child)
+
+        return path.rstrip("--")
+
+    def get_height(self):
+        """Return the height of the tree."""
+        return self.calc_height(self.root)
+
+    def calc_height(self, node):
+        if node is None:
+            return -1
+        left_height = self.calc_height(node.left_child)
+        right_height = self.calc_height(node.right_child)
+        return 1 + max(left_height, right_height)
+
 
 
 """
@@ -109,4 +166,5 @@ if __name__ == '__main__':
     na.get_left().get_left().set_left("h")
 
     bt = BinaryTree(na)
-    bt.traverse("postorder")
+    print(bt.get_height())
+    
