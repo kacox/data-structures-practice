@@ -17,3 +17,43 @@ Desired operations:
 
 """
 
+import singly_linked_list as ll
+
+
+class Queue:
+    """A queue data structure."""
+
+    def __init__(self):
+        self.members = ll.LinkedList()
+
+    def enqueue(self, item):
+        self.members.append(item)
+
+    def dequeue(self):
+        self.members.pop()
+
+    def is_empty(self):
+        return self.members.is_empty()
+
+    def get_size(self):
+        return self.members.get_size()
+
+    def __repr__(self):
+        repr_str = "[Queue: "
+
+        if self.members.head:
+            current = self.members.head
+            while current.next:
+                repr_str = repr_str + str(current) + ", "
+                current = current.next
+            repr_str = repr_str + str(current)
+
+        return repr_str + "]"
+
+
+if __name__ == '__main__':
+    q = Queue()
+    q.enqueue("a")
+    q.enqueue("b")
+    q.enqueue("c")
+    q.enqueue("d")
