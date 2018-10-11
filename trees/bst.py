@@ -15,9 +15,12 @@ class BinaryNode:
 class BinarySearchTree:
     """A Binary Search Tree."""
 
-    def __init__(self, node):
+    def __init__(self, node=None):
         """Create a BST with a specified root node."""
-        self.root = node
+        if node:
+            self.root = node
+        else:
+            self.root = None
 
     def insert(self, node):
         """Insert a node into the BST."""
@@ -74,6 +77,17 @@ class BinarySearchTree:
             _traverse_inorder(self.root)
         return traversal
 
+    def is_valid_bst(self):
+        """Determines if the BST is valid."""
+        traversal = self.traverse_inorder()
+        if len(traversal) > 1:
+            for indx in range(len(traversal) - 1):
+                if traversal[indx] > traversal[indx + 1]:
+                    return False
+            return True
+
+        return True
+
     def __repr__(self):
         return "[ BST, root: {} ]".format(self.root)
 
@@ -96,3 +110,4 @@ if __name__ == '__main__':
     bst.insert(n50)
 
     print(bst.traverse_inorder())
+    print(bst.is_valid_bst())
