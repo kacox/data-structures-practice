@@ -46,7 +46,7 @@ class BinarySearchTree:
         """Search for a node by its data attribute."""
         current_node = self.root
         searching = True
-        
+
         while searching:
             if data > current_node.data:
                 if not current_node.right:
@@ -59,6 +59,20 @@ class BinarySearchTree:
             else:
                 return True
 
+    def traverse_inorder(self):
+        """InOrder traversal of the BST."""
+        traversal = []
+
+        def _traverse_inorder(current_node):
+            """InOrder traversal of the BST."""
+            if current_node:
+                _traverse_inorder(current_node.left)
+                traversal.append(current_node.data)
+                _traverse_inorder(current_node.right)
+
+        if self.root:
+            _traverse_inorder(self.root)
+        return traversal
 
     def __repr__(self):
         return "[ BST, root: {} ]".format(self.root)
@@ -81,10 +95,4 @@ if __name__ == '__main__':
     bst.insert(n2)
     bst.insert(n50)
 
-    print(bst.search(10))
-    print(bst.search(9))
-    print(bst.search(2))
-    print(bst.search(50))
-    print(bst.search(51))
-    print(bst.search(12))
-    print(bst.search(8))
+    print(bst.traverse_inorder())
