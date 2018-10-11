@@ -44,7 +44,21 @@ class BinarySearchTree:
 
     def search(self, data):
         """Search for a node by its data attribute."""
-        pass
+        current_node = self.root
+        searching = True
+        
+        while searching:
+            if data > current_node.data:
+                if not current_node.right:
+                    return False
+                current_node = current_node.right
+            elif data < current_node.data:
+                if not current_node.left:
+                    return False
+                current_node = current_node.left
+            else:
+                return True
+
 
     def __repr__(self):
         return "[ BST, root: {} ]".format(self.root)
@@ -66,3 +80,11 @@ if __name__ == '__main__':
     bst.insert(n21)
     bst.insert(n2)
     bst.insert(n50)
+
+    print(bst.search(10))
+    print(bst.search(9))
+    print(bst.search(2))
+    print(bst.search(50))
+    print(bst.search(51))
+    print(bst.search(12))
+    print(bst.search(8))
