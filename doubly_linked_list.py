@@ -34,9 +34,26 @@ class DoublyLinkedList:
             self.tail = current.next
         self.size += 1
 
-    def insert(self, data, new_data):
-        """Insert a node before a given node."""
-        pass
+    def insert_after(self, data, new_data):
+        """Insert a node after a given node."""
+        if self.head:
+            # traverse until data is found or until the end of the dll
+            # if data is found, insert new_data after it (data.next), then return
+            # if end of dll is reached, without finding, do nothing (message)
+            if self.head.data == data:
+                # beginning insert
+                new_data_next = self.head.next
+                self.head.next = Node(new_data)
+                self.head.next.previous = self.head
+                self.head.next.next = new_data_next
+                self.size += 1
+                if self.size == 2:
+                    self.tail = self.head.next
+
+            # middle insert
+
+            # end insert
+
 
     def remove(self, data):
         """Remove a node from the DLL."""
