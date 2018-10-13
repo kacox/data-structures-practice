@@ -65,11 +65,11 @@ class DoublyLinkedList:
 
     def is_empty(self):
         """Returns whether or not the DLL is empty."""
-        pass
+        return self.get_size() == 0
 
     def get_size(self):
         """Returns the size of the DLL."""
-        pass
+        return self.size
 
     def __repr__(self):
         """Human readible version of the DLL."""
