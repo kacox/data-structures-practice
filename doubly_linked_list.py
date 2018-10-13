@@ -28,9 +28,10 @@ class DoublyLinkedList:
         else:
             current = self.head
             while current.next:
-                # traverse to the last node
                 current = current.next
             current.next = Node(data)
+            self.tail = current.next
+        self.size += 1
 
     def insert(self, data, new_data):
         """Insert a node before a given node."""
