@@ -45,16 +45,21 @@ class Deque:
         pass
 
     def add_rear(self, item):
+        """Add an item to the rear of the deque."""
         pass
 
     def remove_front(self):
+        """Remove an item from the front of the deque."""
         pass
 
     def remove_rear(self):
+        """Remove an item from the rear of the deque."""
         pass
 
     def is_empty(self):
-        pass
+        """Check if the deque is empty."""
+        return self.size() == 0
 
     def size(self):
-        pass
+        """Return the size of the deque."""
+        return self.size()
