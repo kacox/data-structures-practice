@@ -30,6 +30,7 @@ class DoublyLinkedList:
             while current.next:
                 current = current.next
             current.next = Node(data)
+            current.next.previous = current
             self.tail = current.next
         self.size += 1
 
@@ -43,7 +44,20 @@ class DoublyLinkedList:
 
     def pop(self):
         """Remove a node from the end of the DLL."""
-        pass
+        if self.head:
+            current = self.head
+            while current.next:
+                current = current.next
+
+            if current.previous:
+                # not the head
+                current.previous.next = None
+                current.previous = None
+            else:
+                self.head = None
+                self.tail = None
+
+            self.size -= 1
 
     def search(self, data):
         """Determine the existence of a node in the DLL."""
