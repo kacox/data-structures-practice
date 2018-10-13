@@ -17,9 +17,10 @@ class DoublyLinkedList:
     def __init__(self):
         self.head = None
         self.tail = None
+        self.size = 0
 
-    def add(self, data):
-        """Add a node to the end of the DLL."""
+    def append(self, data):
+        """Append a node to the end of the DLL."""
         if not self.head:
             first_node = Node(data)
             self.head = first_node
@@ -30,7 +31,6 @@ class DoublyLinkedList:
                 # traverse to the last node
                 current = current.next
             current.next = Node(data)
-        
 
     def insert(self, data, new_data):
         """Insert a node before a given node."""
@@ -38,6 +38,22 @@ class DoublyLinkedList:
 
     def remove(self, data):
         """Remove a node from the DLL."""
+        pass
+
+    def pop(self):
+        """Remove a node from the end of the DLL."""
+        pass
+
+    def search(self, data):
+        """Determine the existence of a node in the DLL."""
+        pass
+
+    def is_empty(self):
+        """Returns whether or not the DLL is empty."""
+        pass
+
+    def get_size(self):
+        """Returns the size of the DLL."""
         pass
 
     def __repr__(self):
@@ -56,8 +72,8 @@ class DoublyLinkedList:
 if __name__ == '__main__':
     # Make and test the DLL
     dll = DoublyLinkedList()
-    dll.add(6)
-    dll.add(2)
-    dll.add(12)
-    dll.add(9)
-    dll.add(22)
+    dll.append(6)
+    dll.append(2)
+    dll.append(12)
+    dll.append(9)
+    dll.append(22)
