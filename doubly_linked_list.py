@@ -34,26 +34,44 @@ class DoublyLinkedList:
             self.tail = current.next
         self.size += 1
 
-    def insert_after(self, data, new_data):
-        """Insert a node after a given node."""
-        if self.head:
-            # traverse until data is found or until the end of the dll
-            # if data is found, insert new_data after it (data.next), then return
-            # if end of dll is reached, without finding, do nothing (message)
-            if self.head.data == data:
-                # beginning insert
-                new_data_next = self.head.next
-                self.head.next = Node(new_data)
-                self.head.next.previous = self.head
-                self.head.next.next = new_data_next
+    def insert(self, pos, data):
+        """Insert a node at a given position (pushes old node forward)."""
+        if pos > self.size:
+            print("Position out of range.")
+            return
+
+        if not self.head and pos == 0:
+            # insert as first node in DLL
+            self.append(data)
+
+        elif self.head:
+            current_pos = 0
+            new_node = Node(data)
+
+            # insert at beginning (of non-empty list)
+            if pos == 0:
+                self.head.previous = new_node
+                new_node.next = self.head
+                self.head = new_node
                 self.size += 1
-                if self.size == 2:
-                    self.tail = self.head.next
+                return
 
             # middle insert
+            current_node = self.head
+            while current_node.next:
+                current_node = current_node.next
+                current_pos += 1
 
-            # end insert
+                if current_pos == pos:
+                    current_node.previous.next = new_node
+                    new_node.next = current_node
+                    new_node.previous = current_node.previous
+                    current_node.previous = new_node
+                    self.size += 1
+                    return
 
+            # insert at end
+            self.append(data)
 
     def remove(self, data):
         """Remove a node from the DLL."""
@@ -107,5 +125,5 @@ if __name__ == '__main__':
     dll.append(6)
     dll.append(2)
     dll.append(12)
-    dll.append(9)
-    dll.append(22)
+    # dll.append(9)
+    # dll.append(22)
