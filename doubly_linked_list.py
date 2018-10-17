@@ -75,7 +75,36 @@ class DoublyLinkedList:
 
     def remove(self, data):
         """Remove a node from the DLL."""
-        pass
+        if self.head:
+            if self.head.data == data:
+                # remove from front
+                if self.head is self.tail:
+                    # only node in dll
+                    self.head = None
+                    self.tail = None
+                else:
+                    # at least 2 nodes present
+                    new_head = self.head.next
+                    self.head.next = None
+                    new_head.previous = None
+                    self.head = new_head
+                self.size -= 1
+            else:
+                # middle or end node
+                current = self.head
+                while current.next:
+                    current = current.next
+                    if current.data == data:
+                        if current.next is not None:
+                            # remove middle node
+                            current.previous.next = current.next
+                            current.next.previous = current.previous
+                            current.next = None
+                            current.previous = None
+                            self.size -= 1
+                        else:
+                            # remove node from end
+                            self.pop()
 
     def pop(self):
         """Remove a node from the end of the DLL."""
@@ -87,6 +116,7 @@ class DoublyLinkedList:
             if current.previous:
                 # not the head
                 current.previous.next = None
+                self.tail = current.previous
                 current.previous = None
             else:
                 self.head = None
