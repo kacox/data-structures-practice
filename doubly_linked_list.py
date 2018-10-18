@@ -126,7 +126,15 @@ class DoublyLinkedList:
 
     def search(self, data):
         """Determine the existence of a node in the DLL."""
-        pass
+        if self.head:
+            if self.head.data == data:
+                return True
+            current = self.head
+            while current.next:
+                current = current.next
+                if current.data == data:
+                    return True
+        return False
 
     def is_empty(self):
         """Returns whether or not the DLL is empty."""
@@ -155,5 +163,5 @@ if __name__ == '__main__':
     dll.append(6)
     dll.append(2)
     dll.append(12)
-    # dll.append(9)
-    # dll.append(22)
+    dll.append(9)
+    dll.append(22)
