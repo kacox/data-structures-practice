@@ -1,5 +1,5 @@
 """
-Implementation of a Heap data structure.
+Implementation of Heap data structures.
 
 From Wikipedia:
     '...a heap is a specialized tree-based data structure that satisfies
@@ -19,27 +19,125 @@ From Wikipedia:
 
 Although conceptually heaps are thought of as tree-like, they are best
 implemented as arrays (more compact compared to using a Node class).
+
+    Tree:
+          8
+        /    \
+       10     20
+      /  \
+    17    15
+
+    Array:
+    [8, 10, 20, 17, 15]
+
 """
 
 class MinHeap:
-    """Implementation of a Min Heap."""
+    """Implementation of a binary Min Heap."""
 
     def __init__(self):
-        self.heap = []
+        self.heap = [10, 15, 20, 17]
 
     def insert(self, data):
+        """
+        Insert the new element at the bottom of the heap then heapify up
+        until in the correct position.
+        """
         pass
 
     def extract(self):
-        pass
+        """
+        Remove the minimum value from the top of the heap, then heapify
+        down until heap property restored.
+        """
+        if self.heap:
+            # remove min val from top, set new top value (swap and pop)
+            self.heap[0], self.heap[-1] = self.heap[-1], self.heap[0]
+            min_item = self.heap.pop()
+
+            # find correct spot for new top of heap
+            self.heapify_down()
+
+            # return the removed min value
+            return min_item
+
+
 
     def heapify_up(self):
+        """
+        Move the most recently added element up the heap into its correct
+        position.
+        """
+
+        # in response to insert
+        # start at last position (most recently added); "bottom" of the heap
+        # walk up as long as there is a parent element ("bubble up")
+        # and the item is out of order
+        # in this case this would be the parent being greater than current
+        # so you would swap the values (their indices would swap)
         pass
 
     def heapify_down(self):
-        pass
+        """
+        In response to extraction, put the most recently added item at the
+        top of the heap, then move it downwards until in the correct
+        position.
+        """
+
+        # start at root
+        current_index = 0
+        # while a left child exists, walk downwards ("bubble down")
+        while self.has_left_child(current_index):
+            # aside: if no left child, no right child can exist (insertion rules prevent)
+            # assume left child has smaller value
+            smaller_child_index = self.get_left_child_index(current_index)
+            # then check if right child exists, if so see if its value smaller
+            if self.has_right_child(current_index) and (self.heap[self.get_right_child_index(current_index)] < self.heap[smaller_child_index]):
+                # if so, set as the smaller child index (instead of left child)
+                smaller_child_index = self.get_right_child_index(current_index)
+
+            # check if in order, exit while loop
+            if self.heap[current_index] < self.heap[smaller_child_index]:
+                break
+            # else, swap value with smaller child
+            else:
+                self.swap(current_index, smaller_child_index)
+
+            # move down to smaller child
+            current_index = smaller_child_index
 
     def peek(self):
+        """Show the top item in the heap."""
+        if self.heap:
+            return self.heap[0]
+
+    """Helper methods for heapify methods."""
+    def swap(self, first_index, second_index):
+        """Swap two items in the heap."""
+        self.heap[first_index], self.heap[second_index] = self.heap[second_index], self.heap[first_index]
+
+    def get_left_child_index(self, parent_index):
+        """Get the index of the left child."""
+        # b/c a binary min heap, can calculate correct location
+        return (2 * parent_index) + 1
+
+    def get_right_child_index(self, parent_index):
+        """Get the index of the left child."""
+        # b/c a binary min heap, can calculate correct location
+        return (2 * parent_index) + 2
+
+    def get_parent_index(self):
+        pass
+
+    def has_left_child(self, parent_index):
+        """Indicates if a left child exists."""
+        return self.get_left_child_index(parent_index) < len(self.heap)
+
+    def has_right_child(self, parent_index):
+        """Indicates if a right child exists."""
+        return self.get_right_child_index(parent_index) < len(self.heap)
+
+    def has_parent(self):
         pass
 
     def __repr__(self):
