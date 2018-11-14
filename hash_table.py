@@ -7,6 +7,7 @@ import hashlib
 
 
 class HashTable:
+    """Simple hash table data structure."""
 
     def __init__(self, size):
         self._size = size
@@ -47,7 +48,6 @@ class HashTable:
 
         # now you either have an empty index or the original index
         return new_idx
-
 
     def _hash(self, key):
         """Hashes the key."""
