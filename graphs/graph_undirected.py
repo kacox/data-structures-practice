@@ -21,18 +21,27 @@ class Graph:
         self.nodes = {}
         self.size = 0
 
-    def add_node(self, key):
-        self.nodes[key] = Node(key)
+    def add_node(self, node):
+        """Add a Node to the graph."""
+        self.nodes[node.key] = node
         self.size += 1
 
     def make_edge(self, start, end):
         """Make an undirected edge between two nodes."""
         if start not in self.nodes:
-            self.add_node(start)
+            start_node = Node(start)
+            self.add_node(start_node)
+        elif start in self.nodes:
+            start_node = self.nodes[start]
+
         if end not in self.nodes:
-            self.add_node(end)
-        self.nodes[start].add_neighbor(self.nodes[start])
-        self.nodes[end].add_neighbor(self.nodes[end])
+            end_node = Node(end)
+            self.add_node(end_node)
+        elif end in self.nodes:
+            end_node = self.nodes[end]
+
+        start_node.add_neighbor(end_node)
+        end_node.add_neighbor(start_node)
 
     def get_node(self, key):
         """Returns a Node object from the graph."""
@@ -44,9 +53,43 @@ class Graph:
         """Returns a list of Node objects in the graph."""
         return list(self.nodes.values())
 
+    def bfs(self, start):
+        """Breadth-first search from given start key."""
+        if start in self.nodes:
+            path = []
+
+            # using a list for ease; not as efficient as dll
+            q = []
+            seen = set([])
+
+            q.append(self.nodes[start])
+            seen.add(start)
+
+            while q:
+                current = q.pop(0)
+                path.append(current.key)
+                for neighbor in current.neighbors:
+                    if neighbor.key not in seen:
+                        q.append(neighbor)
+                        seen.add(neighbor.key)
+            return path
+
+        else:
+            print("This starting node is not in the graph.")
+
+    def dfs(self):
+        pass
+
     def __contains__(self, key):
         """Graph membership testing."""
         return key in self.nodes
+
+    def __repr__(self):
+        """Display contents of the graph."""
+        contents = []
+        for node_key in self.nodes.keys():
+            contents.append(str(node_key))
+        return "{" + ", ".join(contents).rstrip(", ") + "}"
 
 
 if __name__ == '__main__':
@@ -63,6 +106,5 @@ if __name__ == '__main__':
     graph.make_edge(0, 4)
     graph.make_edge(2, 3)
     graph.make_edge(3, 5)
-    print(graph.nodes)
-    print(graph.size)
-
+    # print(graph, "\n")
+    # print(graph.nodes)
