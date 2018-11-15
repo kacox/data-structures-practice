@@ -1,15 +1,15 @@
 """
-Implementation of a Map Abstract Data Type using a hash table.
+Naive implementation of a dictionary using a hash table.
 
 Keys must number data types (might expand later).
 """
 
 
-class Map:
-    """A Map abstract data type."""
+class Dictionary:
+    """A dictionary abstract data structure."""
 
     def __init__(self):
-        """Create an empty Map object."""
+        """Create an empty dictionary object."""
         self.size = 11
 
         # will hold the keys
@@ -36,8 +36,8 @@ class Map:
 
     def put(self, key, val):
         """
-        Add a new key-value pair to the map. If the key is already
-        in the map then replace the old value with the new value.
+        Add a new key-value pair to the dictionary. If the key is already
+        in the dictionary then replace the old value with the new value.
 
         If a slot is already occupied, rehash the hash value. Rehashing
         iterates until an empty slot occurs. 
@@ -83,7 +83,7 @@ class Map:
                     return self.data[next_slot]
                 next_slot = self.rehash(next_slot)
 
-            return "{} not in map.".format(key)
+            return "{} not in dictionary.".format(key)
 
 
     def delete(self, key):
@@ -105,20 +105,20 @@ class Map:
                 else:
                     next_slot = self.rehash(next_slot)
 
-            return "{} not in map.".format(key)
+            return "{} not in dictionary.".format(key)
 
     def __len__(self):
         return len(self.slots)
 
     def __contains__(self, key):
-        """Returns whether or not key is in the Map."""
+        """Returns whether or not key is in the dictionary."""
         for element in self.slots:
             if element == key:
                 return True
         return False
 
     def __repr__(self):
-        """Human-readable version of map."""
+        """Human-readable version of dictionary."""
         ans = "< "
         for key, val in zip(self.slots, self.data):
             ans += "{}:{}, ".format(key, val)
@@ -128,9 +128,9 @@ class Map:
 
 
 if __name__ == '__main__':
-    a_map = Map()
-    a_map.put(11, "green")
-    a_map.put(13, "blue")
-    a_map.put(17, "purple")
+    d = Dictionary()
+    d.put(11, "green")
+    d.put(13, "blue")
+    d.put(17, "purple")
     # test collision resolution
-    a_map.put(22, "red")
+    d.put(22, "red")
