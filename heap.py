@@ -22,14 +22,19 @@ implemented as arrays (more compact compared to using a Node class).
 
     Tree:
           8
-        /    \
-       10     20
+        /   \
+       10    20
       /  \
     17    15
 
     Array:
     [8, 10, 20, 17, 15]
 
+    How to map parent/children indices:
+    parent = (left_child_index - 1) / 2
+    parent = (right_child_index - 2) / 2
+    left = (index_of_parent * 2) + 1
+    right = (index_of_parent * 2) + 2
 """
 
 class MinHeap:
@@ -40,10 +45,15 @@ class MinHeap:
 
     def insert(self, data):
         """
-        Insert the new element at the bottom of the heap then heapify up
-        until in the correct position.
+        Insert the new element at the bottom of the heap (end of the
+        array / the bottom left unoccupied spot that maintains balance)
+        then heapify up until in the correct position.
         """
-        pass
+        # add to the bottom of the heap
+        self.heap.append(data)
+
+        # move up to correct position
+        self.heapify_up()
 
     def extract(self):
         """
@@ -61,8 +71,6 @@ class MinHeap:
             # return the removed min value
             return min_item
 
-
-
     def heapify_up(self):
         """
         Move the most recently added element up the heap into its correct
@@ -72,10 +80,21 @@ class MinHeap:
         # in response to insert
         # start at last position (most recently added); "bottom" of the heap
         # walk up as long as there is a parent element ("bubble up")
-        # and the item is out of order
-        # in this case this would be the parent being greater than current
-        # so you would swap the values (their indices would swap)
-        pass
+        # and the item is out of order (compare to parent)
+        # in min heap, swap if parent less than current
+            # (their indices would swap since in a list?)
+
+        if len(self.heap) > 1:
+            current_index = len(self.heap) - 1
+            parent_index = self.get_parent_index(current_index)
+
+            while (self.has_parent(current_index) and
+                    self.heap[current_index] < self.heap[parent_index]):
+                # swap
+                self.swap(current_index, parent_index)
+                # walk up
+                current_index = self.get_parent_index(current_index)
+
 
     def heapify_down(self):
         """
@@ -126,8 +145,21 @@ class MinHeap:
         # b/c a binary min heap, can calculate correct location
         return (2 * parent_index) + 2
 
-    def get_parent_index(self):
-        pass
+    def get_parent_index(self, child_index):
+        """Get index of parent.
+
+        # TODO: only works for right children (see original mapping
+                comments at beginning of file; also below). Left
+                children are unable to find the correct parent.
+
+                Try with h.insert(14) then h.insert(9) to demo the
+                problem.
+
+                How to map to parent indices:
+                    parent = (left_child_index - 1) // 2
+                    parent = (right_child_index - 2) // 2
+        """
+        return (child_index - 2) // 2
 
     def has_left_child(self, parent_index):
         """Indicates if a left child exists."""
@@ -137,8 +169,8 @@ class MinHeap:
         """Indicates if a right child exists."""
         return self.get_right_child_index(parent_index) < len(self.heap)
 
-    def has_parent(self):
-        pass
+    def has_parent(self, child_index):
+        return self.get_parent_index(child_index) >= 0
 
     def __repr__(self):
         ans = "< "
@@ -147,3 +179,7 @@ class MinHeap:
             ans += ", "
         ans = ans.rstrip(", ")
         return ans + " >"
+
+
+if __name__ == '__main__':
+    h = MinHeap()
