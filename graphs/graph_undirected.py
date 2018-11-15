@@ -73,12 +73,31 @@ class Graph:
                         q.append(neighbor)
                         seen.add(neighbor.key)
             return path
-
         else:
             print("This starting node is not in the graph.")
 
-    def dfs(self):
-        pass
+    def dfs(self, start):
+        """Depth-first search from a given start key."""
+        if start in self.nodes:
+            path = []
+
+            # using a list as a stack for ease
+            s = []
+            seen = set([])
+
+            s.append(self.nodes[start])
+            seen.add(start)
+
+            while s:
+                current = s.pop()
+                path.append(current.key)
+                for neighbor in current.neighbors:
+                    if neighbor.key not in seen:
+                        s.append(neighbor)
+                        seen.add(neighbor.key)
+            return path
+        else:
+            print("This starting node is not in the graph.")
 
     def __contains__(self, key):
         """Graph membership testing."""
